@@ -1,0 +1,120 @@
+.img-map {
+    opacity: 0.9 !important;
+}
+
+
+.WTP-title {
+  font-family: "Arial";
+  font-weight: bold !important;
+}
+
+.my-separator {
+  color: #8AADFF !important;
+
+}
+
+.WTP-h2 {
+  color: #1B1A7A;
+}
+
+.WTP-h3 {
+  color: #8AADFF;
+}
+
+.send-btn {
+  background-color: #8AADFF !important;
+  border-color: #8AADFF !important;
+}
+
+.send-btn:active {
+  border-color: #8AADFF;
+}
+
+.send-btn:focus {
+  border-color: #8AADFF;
+}
+
+.send-btn:visited {
+  border-color: #8AADFF;
+}
+
+.send-btn:hover {
+  border-color: #8AADFF;
+}
+
+.img-wtp {
+  border: 2px solid #333;
+}
+
+
+.master-wtp {
+  background-color: #8AADFF !important;
+}
+
+.footer-WTP {
+  background-color: white !important;
+  border: none !important;
+}
+
+.hr-WTP {
+  border-color: #8AADFF !important;
+}
+
+.WTP-div-connexion {
+  margin-top: 10%;
+}
+
+
+.fb-btn {
+  background-color: #29487d !important;
+  border-color: #29487d !important;
+}
+
+
+.WTP-form-name {
+  background-color: transparent !important;
+  border-top-color: transparent !important;
+  border-left: transparent !important;
+  border-right-color: transparent !important;
+  border-radius: 0px !important;
+  color: white !important;
+  border-bottom-color: white !important;
+}
+
+
+.btn-google {
+  background-color: #db4437 !important;
+  border-color:  #db4437 !important;
+  width:200px !important;
+}
+
+.btn-facebook {
+  width:200px !important;
+  margin-right: 5px;
+}
+
+.btn-instagram {
+  width: 48% !important;
+  background: #5070D1 !important;
+  border-color: #5070D1 !important;
+}
+
+.WTP-btn-ecart {
+  margin-bottom: 10px !important;
+}
+
+.WTP-register {
+  margin-bottom: 10px !important;
+}
+
+.register {
+  color: white !important;
+}
+
+.WTP-signUP {
+  margin-top: 30px !important;
+}
+
+.WTP-map-pres {
+  background: url(WTPMap.png) !important;
+}
