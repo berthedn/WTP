@@ -67,7 +67,7 @@
                 </a>
             </li>
             <li>
-                <a href="" data-scroll="true" data-id="#concept">
+                <a href="" data-scroll="true" data-id="#map">
                     Map
                 </a>
             </li>
@@ -82,7 +82,7 @@
                 </a>
             </li>
             <li>
-                <a href="" data-scroll="true" data-id="#contact">
+                <a href="" data-scroll="true" data-id="#deconnect">
                     Deconnect
                 </a>
             </li>
@@ -233,19 +233,15 @@
                             
                             <script>
                                 var person = { userID: "", name: "", accessToken: "", picture: "", email: ""};
-
                                 function logIn() {
-
                                     FB.login(function (response) {
                                         if (response.status == "connected") {
                                             person.userID = response.authResponse.userID;
                                             person.accessToken = response.authResponse.accessToken;
-
                                             FB.api('/me?fields=id,name,email,picture.type(large)', function (userData) {
                                                 person.name = userData.name;
                                                 person.email = userData.email;
                                                 person.picture = userData.picture.data.url;
-
                                                 $.ajax({
                                                    url: "loginFB.php",
                                                    method: "POST",
@@ -260,7 +256,6 @@
                                         }
                                     }, {scope: 'public_profile, email'})
                                 }
-
                                 window.fbAsyncInit = function() {
                                     FB.init({
                                         appId            : '2030836840485711',
@@ -269,7 +264,6 @@
                                         version          : 'v2.11'
                                     });
                                 };
-
                                 (function(d, s, id){
                                     var js, fjs = d.getElementsByTagName(s)[0];
                                     if (d.getElementById(id)) {return;}
@@ -277,7 +271,6 @@
                                     js.src = "https://connect.facebook.net/en_US/sdk.js";
                                     fjs.parentNode.insertBefore(js, fjs);
                                 }(document, 'script', 'facebook-jssdk'));
-
                             </script> -->
 
                             <!-- <button type="button"  class=" btn-google fb-btn btn btn-lg btn-black btn-contact col-md-1">
@@ -367,21 +360,120 @@
        <div class="text-area">
             <div class="container">
                 <div class="row">
-                    <div class="col-md-4">
-                      <div class="title add-animation">
-                          <h5 class="text-gray">MAP</h5>
-                          <h2 class="WTP-h2">MAP</h2>
-                          <div class="separator-container">
-                          <div class="separator line-separator my-separator">∎</div>
-                        </div>
-                      </div>
-                    </div>
+                    
+                      
+                    
 
-                    <div class="col-md-7 col-md-offset-1">
-                        <p class="add-animation animation-1">MAP</p>
-                        <p class="add-animation animation-2">Map</p>
-                        <p class="add-animation animation-3">Map</p>
+                <div class="title add-animation">
+                   <h5 class="text-gray">Choose Your Spot</h5>
+                   <h2 class="WTP-h2">Map</h2>
+                   <div class="separator-container">
+                        <div class="separator line-separator">∎</div>
                     </div>
+               </div>
+
+
+
+
+                    
+                        <style>
+    #map{
+      height:100%;
+      width:100%;
+    }
+  </style>
+
+
+ 
+  <div id="map">
+  <script>
+    function initMap(){
+      // Map options
+      var options = {
+        zoom:4,
+        center:{lat:42.3601,lng:-71.0589}
+      }
+
+      // New map
+      var map = new google.maps.Map(document.getElementById('map'), options);
+
+      // Listen for click on map
+      google.maps.event.addListener(map, 'click', function(event){
+        // Add marker
+        //addMarker({coords:event.latLng});
+      });
+
+      /*
+      // Add marker
+      var marker = new google.maps.Marker({
+        position:{lat:42.4668,lng:-70.9495},
+        map:map,
+        icon:'https://developers.google.com/maps/documentation/javascript/examples/full/images/beachflag.png'
+      });
+
+      var infoWindow = new google.maps.InfoWindow({
+        content:'<h1>Lynn MA</h1>'
+      });
+
+      marker.addListener('click', function(){
+        infoWindow.open(map, marker);
+      });
+      */
+
+      // Array of markers
+
+      var markers = [
+        {
+          coords:{lat:42.4668,lng:-70.9495},
+          content:'<h3>Lynn MA</h3><img src="bali.jpg" width="220" height="150">'
+        },
+        {
+          coords:{lat:42.8584,lng:-70.9300},
+          content:'<h3>Amesbury MA</h3>'
+        },
+        {
+          coords:{lat:42.7762,lng:-71.0773},
+          content:'<h3>TEST</h3>'
+        }
+      ];
+
+      // Loop through markers
+      for(var i = 0;i < markers.length;i++){
+        // Add marker
+        addMarker(markers[i]);
+      }
+
+      // Add Marker Function
+      function addMarker(props){
+        var marker = new google.maps.Marker({
+          position:props.coords,
+          map:map,
+          //icon:props.iconImage
+        });
+
+        // Check for customicon
+        if(props.iconImage){
+          // Set icon image
+          marker.setIcon(props.iconImage);
+        }
+
+        // Check content
+        if(props.content){
+          var infoWindow = new google.maps.InfoWindow({
+            content:props.content
+          });
+
+          marker.addListener('click', function(){
+            infoWindow.open(map, marker);
+          });
+        }
+      }
+    }
+  </script>
+  <script async defer
+    src="https://maps.googleapis.com/maps/api/js?key=AIzaSyB91h9BpEs5-9q6x1eYvQo-YpIyoXlGyNU&callback=initMap">
+    </script>
+                    
                 </div>
             </div>
         </div>
@@ -573,13 +665,13 @@
 <?php if(isset($_SESSION['id'])) 
   {
 ?>
-<div class="section section-we-are-2 radu" id="Decconect">
+<div class="section section-we-are-2 radu" id="deconnect">
        <div class="text-area">
             <div class="container">
                 <div class="row">
                     <div class="col-md-4">
                       <div class="title add-animation">
-                          <h5 class="text-gray">Deconnect</h5>
+                          <h5 class="text-gray"></h5>
                           <h2 class="WTP-h2">Deconnect</h2>
                           <div class="separator-container">
                           <div class="separator line-separator my-separator">∎</div>
@@ -597,7 +689,7 @@
                               </form>
     
                               <form method="POST" action="../Acceuil.php#top">
-                                <input id="Test2"type="submit" placeholder="NON" value="NON">
+                                <input id="Test2" type="submit" placeholder="NON" value="NON">
                               </form>
 
                         </div>
@@ -686,7 +778,7 @@
         <div class="container">
             <hr class="hr-WTP">
             <div class="copyright">
-                © 2019 WingsProd
+                © 2020 Damien & Sam
             </div>
         </div>
     </footer>
@@ -1049,7 +1141,6 @@
         {
           if (document.getElementById(id).style.display == 'none')
           {
-
                document.getElementById(id).style.display = 'block';
                document.getElementById("WTP-connect").style.display = 'none';
           }
@@ -1059,28 +1150,22 @@
                document.getElementById("WTP-connect").style.display = 'block';
           }
         }
-
-
         function display_div()
         {
-
         if (document.getElementById().style.display == 'block')
         {
            alert('ici');
             // document.getElementById("a_masquer")="none";
             //  document.getElementById("WTP-signUP")='block';
             //  document.getElementById("WTP-connect")="none";
-
-
         }
         else
         {
           // document.getElementById("WTP-signUP")='block';
           alert('la');
-
         }
         }
-
   </script>
 
 </html>
+
