@@ -51,29 +51,29 @@ if(isset($_POST['formconnexion'])) {
 
             //print_r($_SESSION);
             $erreurc = "Bienvenu, Vous etes connecté !"; //Mettre un lien vers profil.php AJOUTER UN POP UP
-           header("Location: ../Acceuil.php");
+           header("Location: ../index.php");
 
          }
          else
          {
-
-            $erreurc = "Veuillez vous confirmer avec le mail que nous vous avons envoyé."; //Mettre un pop up
+            header("Location: ../index.php");
+            //$erreurc = "Veuillez vous confirmer avec le mail que nous vous avons envoyé."; //Mettre un pop up
             
          }
 
       }
      else
       {
-
-         $erreurc = "Mauvais mail ou mot de passe !"; //Mettre un pop up
+        header("Location: ../index.php");
+         //$erreurc = "Mauvais mail ou mot de passe !"; //Mettre un pop up
        
 
       }
    }
    else
    {
-
-      $erreurc = "Tous les champs doivent être complétés !";
+      header("Location: ../index.php");
+      //$erreurc = "Tous les champs doivent être complétés !";
    }
 }
 

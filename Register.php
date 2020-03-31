@@ -33,37 +33,33 @@
               <span class="icon-bar bar2"></span>
               <span class="icon-bar bar3"></span>
           </button>
-          <a href="Acceuil.php" data-scroll="true" class="navbar-brand page-scroll">
+          <a href="index.php" data-scroll="true" class="navbar-brand page-scroll">
              WhereToPics
           </a>
       </div>
       <div class="navbar-scroll-to collapse navbar-collapse" >
         <ul class="nav navbar-nav navbar-right navbar-uppercase">
               <li>
-                  <a href="Acceuil.php#whoWeAre" data-scroll="true" data-id="#whoWeAre" class="active">
+                  <a href="index.php#whoWeAre" data-scroll="true" data-id="#whoWeAre" class="active">
                       About us
                   </a>
               </li>
               <li>
-                  <a href="Acceuil.php#concept" data-scroll="true" data-id="#concept">
+                  <a href="index.php#concept" data-scroll="true" data-id="#concept">
                       Concept
                   </a>
               </li>
               <li>
-                  <a href="Acceuil.php#team" data-scroll="true" data-id="#team">
+                  <a href="index.php#team" data-scroll="true" data-id="#team">
                       Masterminds
                   </a>
               </li>
               <li>
-                  <a href="Acceuil.php.contact" data-scroll="true" data-id="#contact">
+                  <a href="index.php#contact" data-scroll="true" data-id="#contact">
                       Contact
                   </a>
               </li>
-              <li class="social-links">
-                  <a href="#">
-                      <i class="fa fa-instagram"></i>
-                  </a>
-              </li>
+              
          </ul>
       </div><!-- /.navbar-collapse -->
     </div>
@@ -71,7 +67,7 @@
 
   <div class="section section-header my-header" id="top">
       <div class="full-image pattern-image">
-          <img class="img-map" src="Map.jpg"/>
+          <img class="img-map" src="images/Map.jpg"/>
 
           <div class="container">
               <div class="WTP-signUP content content-with-opacity">
@@ -84,7 +80,7 @@
 </br>
 
 
-                         <form action="../Includes/inscription.php" method="POST">
+                         <form  method="POST" action="../Includes/inscription.php">
                              <div class="row">
                                <div class="col-md-12">
                                  <div class="col-md-4 col-md-offset-4">
@@ -121,22 +117,30 @@
                                  </div>
                                </div>
                             
-                     </div>
-                 </div>
+                     
 
                   <div class="content content-with-opacity WTP-div-connexion">
 
-                    <button type="submit" name="forminscription" value="Masquer" onclick="masquer_div('a_masquer');" class="send-btn btn btn-lg btn-black btn-contact">
+                    <button type="submit" name="forminscription" value="Masquer"  class="send-btn btn btn-lg btn-black btn-contact">
 
                     SIGN UP <i class="fa fa-angle-double-right"></i>
                     </button>
-                    </form>
+                  </div>
+                </form>
                 </div>
                 </div>
               </div>
           </div>
       </div>
   </div>
+
+
+
+
+
+
+
+
 
 
 

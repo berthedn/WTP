@@ -1,7 +1,45 @@
+.padding-50{
+  padding-right: 50px !important;
+}
+
+
+.explore-btn {
+  margin-left: auto !important;
+    margin-right: auto !important;
+    display: block !important;
+    margin-top: 30px !important;
+}
+
 .img-map {
     opacity: 0.9 !important;
 }
 
+.new-spot{
+display: block;
+}
+
+.map{
+  margin-top: 125px !important;
+}
+
+.new-spot-form-control{
+  border-radius: 0 !important;
+  border-top: none !important;
+  border-left: none !important;
+  border-right: none !important;
+}
+
+.new-spot-btn{
+  margin-top: 15px;
+  margin-right: auto;
+  margin-left: auto;
+  display: block !important;
+}
+
+.row-new-spot-btn-submi{
+  margin-left: auto;
+  margin-right: auto;
+}
 
 .WTP-title {
   font-family: "Arial";

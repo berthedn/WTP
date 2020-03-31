@@ -5,5 +5,5 @@ if(!isset($_SESSION))
     }
 $_SESSION = array();
 session_destroy();
-header("Location: ../Acceuil.php");
+header("Location: ../index.php");
 ?>
