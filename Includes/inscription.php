@@ -138,7 +138,7 @@ if(isset($_POST['forminscription']))
 
                     <div class="content content-with-opacity WTP-div-connexion">
 
-                    <form method="POST" action="../Register.php">
+                    <form method="POST" action="../index.php">
 
                       <button type="submit"  class="send-btn btn btn-lg btn-black btn-contact" >
                       SIGN IN <i class="fa fa-angle-double-right"></i>
