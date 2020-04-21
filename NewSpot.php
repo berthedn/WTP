@@ -30,7 +30,8 @@ $bdd = new PDO('mysql:host=wheretoplpbd.mysql.db;dbname=wheretoplpbd', 'wheretop
 
 
 //Initialisation de Google Map avec la géolocalisation de l'utilisateur
-//include("Includes/InitGoogleMap.php");
+//Init of Google Map
+
 
 //-------------------  INIT GOOGLE
 
@@ -65,6 +66,8 @@ if (isset ($_POST['FormAddSpot']))
   //include("Includes/BoutonForm.php");
 }
 
+//Get the number of spot already in the database
+
 $Compttaille = $bdd->prepare("SELECT COUNT(*) FROM Spot;");
 $Compttaille->execute();
 $data = $Compttaille->fetch();
@@ -73,7 +76,7 @@ $data = $Compttaille->fetch();
 
 $compteur = $data[0]*3+3;
 
-
+//Displaying the markers/spot on the map
 
 for ($i=3; $i<$compteur; $i=$i+3)
 {
