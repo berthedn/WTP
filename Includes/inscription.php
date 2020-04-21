@@ -40,46 +40,55 @@ $bdd = new PDO('mysql:host=wheretoplpbd.mysql.db;dbname=wheretoplpbd', 'wheretop
 
 
 //Test si le bouton du formulaire est activé ou non
+//Test if the button SIGN IN is pushed from the inscritpion form
 if(isset($_POST['forminscription']))
 {
    $pseudo = htmlspecialchars($_POST['pseudo']);
    $mail = htmlspecialchars($_POST['mail']);
    $mail2 = htmlspecialchars($_POST['mail2']);
+    
+   //Use of encryption SAH1
    $mdp = sha1($_POST['mdp']);
    $mdp2 = sha1($_POST['mdp2']);
 
 
 
    //Test si tout les champs sont bien rempli ou pas
+   //Test if every input are fullfil
    if(!empty($_POST['pseudo']) AND !empty($_POST['mail']) AND !empty($_POST['mail2']) AND !empty($_POST['mdp']) AND !empty($_POST['mdp2']))
    {
       $pseudolength = strlen($pseudo);
 
       //Test taille pseudo
+      //Test pseudo lenght
       if($pseudolength <= 255)
       {
 
          //Test si mail1 egal mail2
+         //Test if both mail input are equal
          if($mail == $mail2)
          {
 
             //Test si mail est du bon format
+            //Test if mail input is an email
             if(filter_var($mail, FILTER_VALIDATE_EMAIL))
             {
-            
+               //Get if the email was already used by someone else or not
                $reqmail = $bdd->prepare('SELECT * FROM membres WHERE mail = ?');
                
                $reqmail->execute(array($mail));
                $mailexist = $reqmail->rowCount();
            
                //Test si le mail existe dans la base de donnée
+               //O if not used, different of 0 if used
                if($mailexist == 0)
                {
 
                   //Test si le mdp correspondant est ok aussi
+                  //Test if both password are equal
                   if($mdp == $mdp2)
                   {
-                     
+                     //creation of a random number, used in a future feature for email confirmation
                      $longueurKey = 15;
                      $key = "";
                      for($i=1;$i<$longueurKey;$i++) {
@@ -88,9 +97,15 @@ if(isset($_POST['forminscription']))
                      
 
                      
-
+                     //Insert a new member into the database
                      $insertmbr = $bdd->prepare("INSERT INTO membres(pseudo, mail, motdepasse, confirmkey, confirme) VALUES(?, ?, ?, ?, ?)");
-                     $insertmbr->execute(array($pseudo, $mail, $mdp, $key, 1));
+                     //$key is the number sent out to make the email confirmation feature
+                     //1 is because it is confirmed, it would be 0 if not confirmed
+                      $insertmbr->execute(array($pseudo, $mail, $mdp, $key, 1));
+                      
+                      
+                      
+                      //Account is created
 ?>
 
 
@@ -163,7 +178,9 @@ if(isset($_POST['forminscription']))
                   }
                   else
                   {
-                     //echo "Vos mots de passes ne correspondent pas !";
+                    
+                      
+                      //Password are not equal
                      ?>
 
 
@@ -235,7 +252,7 @@ if(isset($_POST['forminscription']))
                }
                else
                {
-                  //echo "Adresse mail déjà utilisée !";
+                  //Email adress already used
                   ?>
 
 <html lang="en">
@@ -308,6 +325,7 @@ if(isset($_POST['forminscription']))
             else
             {
                 //echo "Votre adresse mail n'est pas valide !";
+                  //Email is not the correct format
 
                   ?>
 
@@ -379,6 +397,7 @@ if(isset($_POST['forminscription']))
          else
          {
             //echo "Vos adresses mail ne correspondent pas !";
+               //Email adress are not equal
             ?>
 
 <html lang="en">
@@ -448,6 +467,7 @@ if(isset($_POST['forminscription']))
       else
       {
          //echo "Votre pseudo ne doit pas dépasser 255 caractères !";
+            //pseudo lenght is to long
          ?>
 
 <html lang="en">
@@ -518,6 +538,7 @@ if(isset($_POST['forminscription']))
    else
    {  
       //echo "Tous les champs doivent être complétés !";
+         //not every input are full
       ?>
 
 <html lang="en">
