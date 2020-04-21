@@ -5,20 +5,25 @@
 	$c=$bdd;
     $connexion=$bdd;
     $c=$connexion;
-
-    $_FILES['mon_fichier']['name'];    //Le nom original du fichier, comme sur le disque du visiteur (exemple : mon_icone.png).
-	$_FILES['mon_fichier']['type'];     //Le type du fichier. Par exemple, cela peut être « image/png ».
-	$_FILES['mon_fichier']['size'];     //La taille du fichier en octets.
+	
+	//description of the input file (picture)
+    $_FILES['mon_fichier']['name'];    //Le nom original du fichier, comme sur le disque du visiteur (exemple : mon_icone.png). ENG: Original name of the file
+	$_FILES['mon_fichier']['type'];     //Le type du fichier. Par exemple, cela peut être « image/png ». ENG: Type of file
+	$_FILES['mon_fichier']['size'];     //La taille du fichier en octets. ENG: size of the file
 
 	//echo $_POST['Lat'];
 	//echo $_POST['Longi'];
 
+//Test of Latitude input
 if ($_POST['Lat'] > '90' OR $_POST['Lat'] < '-90')
 	{
 		//echo "</br>";
 		//echo "Mauvaise saisie de la Latitude";
 		//goto end;
 
+	
+		//Wrong Latitude input
+	
 		?>
 
 <html lang="en">
@@ -88,13 +93,15 @@ if ($_POST['Lat'] > '90' OR $_POST['Lat'] < '-90')
 		<?php
 		//goto end;
 	}
-
+		//Test Longitude input
 		if ($_POST['Longi'] > '180' OR $_POST['Longi'] < '-180')
 	{
 		//echo "</br>";
 		//echo "Mauvaise saisie de la Longitude";
 		//goto end;
-
+		
+			
+		//Wrong Longitude Input
 		?>
 
 <html lang="en">
@@ -164,26 +171,34 @@ if ($_POST['Lat'] > '90' OR $_POST['Lat'] < '-90')
 		<?php
 		//goto end;
 	}
-
+	
+	//Test the size file
+	//If over 4MO we compress
 	if ($_FILES['mon_fichier']['size'] > 4048576)
 	{
 		//echo $erreur = "Le fichier est trop gros";
 		//on la recupère avec la fonction imagecreatefromjpeg et avec son chemin
+		
     	$img = imagecreatefromjpeg($_FILES['mon_fichier']['tmp_name']);
 
     	//Enfin on la remet ou elle était avec la qualité qu'on veut !
+	//Compress the file to the size we want
     	imagejpeg($img, $_FILES['mon_fichier']['tmp_name'], 75);
 		//goto end;
 	} 
 
 	//Test si le fichier ajouté est du bon format
+	//Table of format accepted in our form
 	$extensions_valides = array( 'jpg' , 'jpeg' , 'png' );
 
 	//1. strrchr renvoie l'extension avec le point (« . »).
 	//2. substr(chaine,1) ignore le premier caractère de chaine.
 	//3. strtolower met l'extension en minuscules.
-	$extension_upload = strtolower(  substr(  strrchr($_FILES['mon_fichier']['name'], '.')  ,1)  );
 
+	//get the extension of the input file
+	$extension_upload = strtolower(  substr(  strrchr($_FILES['mon_fichier']['name'], '.')  ,1)  );
+	
+	//Test if the extension in the input file is in the table of the extension allowed
 	if(!in_array($extension_upload,$extensions_valides))
 	{
 
@@ -192,6 +207,8 @@ if ($_POST['Lat'] > '90' OR $_POST['Lat'] < '-90')
 	
 		//echo "Extension incorrecte";
 		//goto end;
+		
+		//Good file type
 
 		?>
 
@@ -262,7 +279,7 @@ if ($_POST['Lat'] > '90' OR $_POST['Lat'] < '-90')
 		//goto end;
 	}
 
-
+		//Get the Lat and Long
 		$reqTest = $bdd->prepare("SELECT Longi, Lat FROM Spot WHERE Lat ='".$_POST['Lat']."' AND Longi = '".$_POST['Longi']."';");
         $reqTest->execute();
         $data = $reqTest->rowCount();
@@ -271,11 +288,13 @@ if ($_POST['Lat'] > '90' OR $_POST['Lat'] < '-90')
         //echo "</br>";
 		//echo $data;
 		//echo "</br>";
-
+	
+	//Test if the spot is already in the database
         if ($data!=0)
 	{
 		//echo '<br /> Le Spot est deja referencé <br />';
-
+		
+		//Spot already in the database
 		?>
 	<html lang="en">
 <head>
@@ -343,8 +362,9 @@ if ($_POST['Lat'] > '90' OR $_POST['Lat'] < '-90')
 		<?php
 
 
-		//------------ Recup id correspondant 
-
+		//------------ Recup id correspondant
+		
+	//Get the id of the spot corresponding
 		$reqidSDA = $bdd->prepare("SELECT Longi, Lat FROM Spot WHERE Lat = ? AND Longi = ? ;");
         $reqidSDA->execute(array($_POST['Lat'],$_POST['Longi']));
         $dataidSDA = $reqidSDA->rowCount();
@@ -356,7 +376,7 @@ if ($_POST['Lat'] > '90' OR $_POST['Lat'] < '-90')
 
 
 		//------------ Test si id+image n'existe pas deja
-
+	//Get if the name of the file input
 		$reqTestimage = $bdd->prepare("SELECT image, numero FROM SpotDejaAjoute WHERE image = '".($_FILES['mon_fichier']['name'])."' AND numero = ".$dataidSDA.";");
 
         $reqTestimage->execute();
@@ -369,7 +389,8 @@ if ($_POST['Lat'] > '90' OR $_POST['Lat'] < '-90')
 
 		//------------ Fin Test si id+image n'existe pas deja
 
-		//------ N'ajoute pas l'image si id+image deja dans la base 
+		//------ N'ajoute pas l'image si id+image deja dans la base
+		//Test if the id and the file name or the same
 		if ($dataTestimage!=0) 
 			{
 				// echo "Fichier similaire deja dans la base pour le meme Spot.";
@@ -381,10 +402,15 @@ if ($_POST['Lat'] > '90' OR $_POST['Lat'] < '-90')
 		<?php
 				//goto end; // IMPORTANT A RAJOUTER
 				//goto end;
+				
+				//If spot is already added and the name of the file is the same, file is not uploaded
 			}
 		//------- Fin
 
 		//----------------------  Upload pour SpotDejaAjoute
+		
+		//Test if the name file is different, If differrent == NULL and then add it to the database
+		
 		if ($dataTestimage[0]==NULL)
 		{
 			//echo "</br>";
@@ -393,10 +419,12 @@ if ($_POST['Lat'] > '90' OR $_POST['Lat'] < '-90')
 			?>
 	
 		<?php
-
+		
+			//Add the spot to the folder /baseSup/ for the double
 			$dossier = '../baseSup/';
 			$fichier = basename($_FILES['mon_fichier']['name']);
      		
+		//Test if the file moved from the input to the right folder correctly
      		if(move_uploaded_file($_FILES['mon_fichier']['tmp_name'], $dossier.$fichier)) //Si la fonction renvoie TRUE, c'est que ça a fonctionné...
      		{
      			//echo "</br>";
@@ -410,7 +438,8 @@ if ($_POST['Lat'] > '90' OR $_POST['Lat'] < '-90')
      	//----------------------  Fin Upload pour SpotDejaAjoute
 
      	//----------------------  Ajout des valeurs dans SpotDejaAjoute
-
+	
+	//Insert the spot already added into the database
      	$reqSDA = $bdd->prepare("INSERT into SpotDejaAjoute values ('".$dataidSDA."','".$_FILES['mon_fichier']['name']."');");
      	//echo "INSERT into SpotDejaAjoute values ('".$dataidSDA."','".$_FILES['mon_fichier']['name']."');";
         $reqSDA->execute();
@@ -419,7 +448,7 @@ if ($_POST['Lat'] > '90' OR $_POST['Lat'] < '-90')
         //var_dump($dataTestimage[0]);
 
 
-
+			//Test if the request went well or not
 			if($resSDA==TRUE)
 			{
 				//echo "</br>";
@@ -433,17 +462,18 @@ if ($_POST['Lat'] > '90' OR $_POST['Lat'] < '-90')
 	}
 	else
 	{
-
-		$req1 = $bdd->prepare("INSERT INTO Spot VALUES ('', '".($_POST['NDS'])."','".($_POST['Longi'])."','".($_POST['Lat'])."');");
-		
+	
+		//The spot is new, Insert the coordinates and info to the database
+		$req1 = $bdd->prepare("INSERT INTO Spot VALUES ('', '".($_POST['NDS'])."','".($_POST['Longi'])."','".($_POST['Lat'])."');");	
         $req1->execute();
         $res1 = $req1->fetch();
 
-       	//
+       	
 
        	//echo "INSERT INTO Spot VALUES ('', '".($_POST['NDS'])."','".($_POST['Longi'])."','".($_POST['Lat'])."');";
        	//echo "test3";
-
+	
+		//The insert went well
 			?>
 	<html lang="en">
 <head>
@@ -511,7 +541,7 @@ if ($_POST['Lat'] > '90' OR $_POST['Lat'] < '-90')
 	
 
 		//--------------- Traitement de l'upload
-
+	//Get the number of spot already in the database
 		$reqNom = $bdd->query("SELECT COUNT(*) FROM Spot;");
         $reqNom->execute();
         $Nom = $reqNom->fetch();
@@ -520,7 +550,7 @@ if ($_POST['Lat'] > '90' OR $_POST['Lat'] < '-90')
 
 
 
-
+		//make the right path and rename the input file
 		$dossier = 'upload/';
 		$fichier = '../upload/'.basename($Nom[0].".jpg");
 
@@ -532,7 +562,8 @@ if ($_POST['Lat'] > '90' OR $_POST['Lat'] < '-90')
 		//move_uploaded_file($_FILES['mon_fichier']['tmp_name'], $dossier.$fichier);
 
 		//copy($_FILES['mon_fichier']['tmp_name'], $dossier.$fichier);
-
+	
+	//Test if the file moved correctly from the input folder to the upload folder
     	if(move_uploaded_file($_FILES['mon_fichier']['tmp_name'], $fichier)) //Si la fonction renvoie TRUE, c'est que ça a fonctionné...
     	{
      		//echo "</br>";
